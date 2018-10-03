@@ -1,0 +1,19 @@
+{
+  "host": "http://localhost:4200",
+  "authentication": {
+    "authUrl": "http://localhost/dialog/authorize",
+    "client_id": "g4-lms",
+    "redirect_uri": "http://localhost:4200/auth",
+    "scope": "offline_acces",
+    "response_type": "token"
+  },
+    "resources": {
+    "userApiUrl": "http://localhost/api/userinfo",
+    "companyApiUrl": "http://localhost/api/companyinfo",
+    "projects": {
+      "tags": "http://localhost:3000/tags",
+      "project": "http://localhost:3000/project",
+      "client": "http://localhost:3000/client"
+    }
+  }
+}

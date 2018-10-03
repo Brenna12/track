@@ -1,0 +1,19 @@
+{
+  "host": "https://track.gen4.info/",
+  "authentication": {
+    "authUrl": "https://passport.gen4.info/dialog/authorize",
+    "client_id": "g4-lms",
+    "redirect_uri": "https://track.gen4.info/auth",
+    "scope": "offline_acces",
+    "response_type": "token"
+  },
+    "resources": {
+    "userApiUrl": "https://passport.gen4.info/api/userinfo",
+    "companyApiUrl": "https://passport.gen4.info/api/companyinfo",
+    "projects": {
+      "tags": "https://track.gen4.info/api/tags",
+      "project": "https://track.gen4.info/api/project",
+      "client": "https://track.gen4.info/api/client"
+    }
+  }
+}

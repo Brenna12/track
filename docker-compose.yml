@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+    client:
+      build: ./webapp
+      ports:
+        - "4200:4200"
+      volumes:
+          - ./webapp/src:/app 
+    api:
+      build: ./api
+      # volumes:
+      #   - ./api:/usr/src/app
+      ports:
+        - "3000:3000"
+      command: 'nodemon server.js'
+
+ 

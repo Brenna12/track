@@ -1,0 +1,27 @@
+<nav>
+  <div class="nav-wrapper">
+
+    <div class="container">
+      <a href="#" class="brand-logo">Gen4 TRACK</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <a routerLink="/home" routerLinkActive="active">Home</a>
+        </li>
+
+        <li *ngIf="!this.auth.isLoggedIn">
+          <login></login>
+        </li>
+
+
+        <li *ngIf="this.auth.isLoggedIn">
+          <a routerLink="/account">Projects</a>
+        </li>
+        <li *ngIf="this.auth.isLoggedIn" (click)=this.auth.logout()>
+          <a>Log Out</a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>

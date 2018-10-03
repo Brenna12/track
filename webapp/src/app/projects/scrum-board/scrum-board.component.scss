@@ -1,0 +1,84 @@
+.pbacklog {
+
+    // border: red solid 3px;
+    margin-bottom:20px;
+
+}
+
+.tasks {
+
+    // border: limegreen solid 3px;
+    margin-bottom:20px;
+}
+
+.meta {
+
+    
+    // border: orange solid 3px;
+    margin-bottom:20px;
+    // height:50px;
+}
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+html,body{
+  padding:0;
+  margin:0;
+}
+
+
+.pbiCard {
+  // height:400px; 
+  background:#2980b9;
+  // float:left;
+}
+
+
+
+@media only screen and (min-width: 600px){
+  .edge {
+   margin:0 10%; 
+  }
+}
+
+.taskH {
+    padding:20px;
+}
+
+.taskH > h3 {
+
+  margin-bottom: 10px;
+
+}
+
+.stuff > h3 {
+
+  margin-bottom: 10px;
+
+}
+.lightblue {
+
+  background-color: rgb(221,92,38);
+}
+
+
+
+.stuff {
+  padding:10px
+}
+
+mat-spinner {
+
+  color: red;
+
+}
+
+
+.pbiArea {
+  margin-top: 100px;
+
+}

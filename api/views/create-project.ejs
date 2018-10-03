@@ -1,0 +1,73 @@
+<% include includes/header.ejs %>
+
+    <% include includes/sidebar.ejs %>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <!-- <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+              <button class="btn btn-sm btn-outline-secondary">Share</button>
+              <button class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+              <span data-feather="calendar"></span>
+              This week
+            </button>
+          </div> -->
+        </div>
+
+        <h2>Create New Project</h2>
+
+
+        <%if (locals.message) { %>
+          <div class="alert alert-danger">
+            <%= message %>
+          </div>
+          <%}  %>
+            <%if (locals.success) { %>
+              <div class="alert alert-success">
+                <%= success %>
+              </div>
+              <%} else {%>
+        <form method="POST" action="/admin/new/project">
+          <div class="form-group">
+              <label for="projectName">Project Name</label>
+              <input type="text" class="form-control" id="projectName" name="name" placeholder="Enter Project Name" required>
+            </div>
+
+
+            <div class="form-group">
+              <label for="desc">Project Description</label>
+              <textarea type="text" class="form-control" id="desc" name="desc" placeholder="Describe the project to the client." required></textarea>    
+                    </div>
+        
+            
+              <div class="form-group">
+              <label for="proj">JIRA Project Tag</label>
+              <input type="text" class="form-control" id="proj" name="proj" placeholder="Jira Project Tag" required>
+              <small id="emailHelp" class="form-text text-muted">Make sure the project exists in Jira before selecting this.</small>
+
+            </div>
+
+             
+            <div class="form-group">
+              <label for="jiraTag">JIRA Client Tag</label>
+              <input type="text" class="form-control" id="jiraTag" name="tag" placeholder="Jira Client Tag" required>
+              <small id="emailHelp" class="form-text text-muted">Make sure a new 'Client' is added into Jira before selecting this.</small>
+
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" name="active" id="activeCheck" checked>
+              <label class="form-check-label" for="activeCheck">Activate Project</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+          <%}%>
+
+      </main>
+    </div>
+  </div>
+        <% include includes/footer.ejs %>
+

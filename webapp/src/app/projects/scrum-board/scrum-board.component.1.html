@@ -1,0 +1,273 @@
+<style>
+  @media only screen and (min-width: 701px) {
+    .fth {
+      width: 20%;
+    }
+  }
+
+  @media only screen and (max-width: 700px) {
+    .fth {
+      width: 100%;
+    }
+  }
+
+</style>
+
+
+<div class="edge">
+  <div class="card " style="margin-top: 20px">
+    <div class="row card tasks">
+
+      <div class="lightblue stuff">
+        <h3 class="white-text text-darken-4 center">Product Backlog Items <i class="material-icons" matTooltip="Product Backlog Items are features requested by the client.
+                    In this format, grey represents an incomplete state, and green signifies that the feature is complete. Each PBI will have associated sub-tasks in the task tracker below."
+            style="font-size: 0.8em">
+            help_outline
+          </i></h3>
+
+
+
+        <div *ngIf="pbis" class="pbiArea">
+          <div *ngIf="loading" class="center">
+            <mat-spinner style="margin:0 auto;" color="primary"></mat-spinner>
+          </div>
+
+          <div *ngIf="pbis < 1" class="center">
+            <p>No issues in this state.</p>
+          </div>
+          <!-- <mat-grid-list [cols]="breakpoint" rowHeight="2:0.5" (window:resize)="onResize($event)">
+          <mat-grid-tile *ngFor="let issue of pbis" [colspan]="1" [rowspan]="1" >
+
+          </mat-grid-tile>
+        </mat-grid-list> -->
+
+          <div class="row">
+            <div *ngFor="let issue of pbis" class="col s12">
+
+              <ng-container *ngIf="issue.fields.resolution?.name === 'Done'; then finished; else unfinished">
+
+              </ng-container>
+
+              <ng-template #finished>
+                <div class="card pbiCard light-green lighten-4">
+                  <div class="card-content black-text">
+                    <span class="card-title"> <b>{{issue.fields.summary}}</b></span>
+                    <small *ngIf="issue.fields.parent">Subtask of <b>{{issue.fields.parent.key}}</b></small>
+
+                    <div class="card-content grey lighten-4">
+                      <b>Estimated Time:</b>
+                      <br>
+                      <p>
+                        {{issue.fields.aggregatetimeoriginalestimate / 3600 }} hours
+                      </p>
+                      <b>Logged Progress:</b>
+                      <br>
+                      <p>
+                        <span *ngIf="(issue.fields.aggregateprogress.progress / 3600) < 1">
+                          {{issue.fields.aggregateprogress.progress / 3600 * 60 | number:'1.0' }} minutes ( {{(
+                          issue.fields.aggregatetimespent / issue.fields.aggregatetimeoriginalestimate) * 100 |
+                          number:'1.0'}}%)
+                        </span>
+                        <span *ngIf="(issue.fields.aggregateprogress.progress / 3600) > 1">
+                          {{issue.fields.aggregateprogress.progress / 3600 | number:'1.1' }} hours ( {{(
+                          issue.fields.aggregatetimespent / issue.fields.aggregatetimeoriginalestimate) * 100 |
+                          number:'1.0'}}%)
+                        </span>
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #unfinished>
+                <div class="card pbiCard grey lighten-3 ">
+                  <div class="card-content black-text">
+                    <span class="card-title"> <b>{{issue.fields.summary}}</b></span>
+                    <small *ngIf="issue.fields.parent">Subtask of <b>{{issue.fields.parent.key}}</b></small>
+
+
+                    <div style="padding: 10px;" class=" grey lighten-5">
+                      <b>Estimated Time:</b>
+                      <br>
+                      <p>
+                        {{issue.fields.aggregatetimeoriginalestimate / 3600 }} hours
+                      </p>
+                      <b>Logged Progress:</b>
+                      <br>
+
+                      <span *ngIf="(issue.fields.aggregateprogress.progress / 3600) < 1">
+                        {{issue.fields.aggregateprogress.progress / 3600 * 60 | number:'1.0' }} minutes ( {{(
+                        issue.fields.aggregatetimespent / issue.fields.aggregatetimeoriginalestimate) * 100 | number:
+                        '1.0'}}%)
+                      </span>
+                      <span *ngIf="(issue.fields.aggregateprogress.progress / 3600) > 1">
+                        {{issue.fields.aggregateprogress.progress / 3600 | number:'1.1' }} hours ( {{(
+                        issue.fields.aggregatetimespent / issue.fields.aggregatetimeoriginalestimate) * 100 | number:
+                        '1.0'}}%)
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+
+
+              </ng-template>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <div class="row card tasks">
+
+      <div class="card " style="margin-top: 20px">
+
+        <div class="lightblue">
+          <h3 class="taskH white-text text-darken-4 center">Task Tracker <i class="material-icons" matTooltip="The Task Tracker displays subtasks of the above Backlog Items and their current state. As work is completed, the task will transition from left to right according to its state."
+              style="font-size: 0.8em">
+              help_outline
+            </i></h3>
+
+          <div *ngIf="loading" class="center">
+            <mat-spinner style="margin:0 auto;" color="primary"></mat-spinner>
+          </div>
+          <div class="col s12 m6 l3 lighten-2">
+            <h3 class="grey-text text-darken-4 center">To Do</h3>
+
+            <div *ngIf="todo < 1" class="center">
+              <p>No issues in this state.</p>
+            </div>
+
+            <div *ngIf="todo" class="">
+
+              <div *ngFor="let issue of todo" class="card">
+                <div class="card-content black-text">
+                  <span class="card-title">{{issue.fields.summary}} </span>
+                  <small *ngIf="issue.fields.parent">Subtask of <b>{{issue.fields.parent.fields.summary}}</b></small>
+
+                  <br>
+                  <div class="card-content grey lighten-4">
+                    <b>Last Updated:</b>
+                    <br>
+                    <p>
+                      {{issue.fields.updated | date:'medium' }}
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col  s12 m6 l3 lighten-2">
+            <h3 class="grey-text text-darken-4 center">In Progress</h3>
+
+            <div *ngIf="progress < 1" class="center">
+              <p>No issues in this state.</p>
+            </div>
+
+            <div *ngIf="progress" class="">
+
+              <div *ngFor="let issue of progress" class="card">
+                <div class="card-content black-text">
+                  <span class="card-title">{{issue.fields.summary}} </span>
+                  <small *ngIf="issue.fields.parent">Subtask of <b>{{issue.fields.parent.fields.summary}}</b></small>
+
+                  <br>
+                  <div class="card-content grey lighten-4">
+                    <b>Last Updated:</b>
+                    <br>
+                    <p>
+                      {{issue.fields.updated | date:'medium' }}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+            </div>
+          </div>
+          <div class="col  s12 m6 l3 lighten-2">
+            <h3 class="grey-text text-darken-4 center">In Review</h3>
+
+            <div *ngIf="progress < 1" class="center">
+              <p>No issues in this state.</p>
+            </div>
+
+            <div *ngIf="review" class="">
+
+              <div *ngFor="let issue of review" class="card">
+                <div class="card-content black-text">
+                  <span class="card-title">{{issue.fields.summary}} </span>
+                  <small *ngIf="issue.fields.parent">Subtask of <b>{{issue.fields.parent.fields.summary}}</b></small>
+
+                  <br>
+                  <div class="card-content grey lighten-4">
+                    <b>Last Updated:</b>
+                    <br>
+                    <p>
+                      {{issue.fields.updated | date:'medium' }}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+            </div>
+          </div>
+          <div class="col  s12 m6 l3 lighten-2">
+            <h3 class="grey-text text-darken-4 center">Complete</h3>
+
+            <div *ngIf="complete < 1" class="center">
+              <p>No issues in this state.</p>
+            </div>
+
+            <div *ngIf="complete" class="ceter">
+
+              <div *ngFor="let issue of complete" class="card">
+                <div class="card-content black-text">
+                  <span class="card-title">{{issue.fields.summary}} </span>
+                  <small *ngIf="issue.fields.parent">Subtask of <b>{{issue.fields.parent.fields.summary}}</b></small>
+
+                  <br>
+                  <div class="card-content grey lighten-4">
+                    <b>Last Updated:</b>
+                    <br>
+                    <p>
+                      {{issue.fields.updated | date:'medium' }}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- <button (click)="logObject()"class="btn btn-small">Click</button> -->
+    </div>
+
+
+
+  </div>

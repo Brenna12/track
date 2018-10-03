@@ -1,0 +1,178 @@
+<% include includes/header.ejs %>
+
+  <% include includes/sidebar.ejs %>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+              <button class="btn btn-sm btn-outline-secondary">Share</button>
+              <button class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+              <span data-feather="calendar"></span>
+              This week
+            </button>
+          </div>
+        </div> -->
+
+
+      <div class="container">
+        <h2>Create Company Offering</h2>
+        <%if (locals.message) { %>
+          <div class="alert alert-danger">
+            <%= message %>
+          </div>
+          <%}  %>
+            <%if (locals.success) { %>
+              <div class="alert alert-success">
+                <%= success %>
+              </div>
+              <%} else {%>
+                <form method="POST" action="/admin/new/offering/company">
+                  <!-- 
+                  <div class="form-group">
+
+                    <label for="number">Select User: </label>
+
+                    <br>
+                    <input class="typeahead form-control" spellcheck="false" autocomplete="off" name="typeahead" id="myInput" type="text" required/>
+                    <small id="emailHelp" class="form-text text-muted">Begin typing a users name to select from the list.</small>
+
+                    <div id="selectdAdmin" class="d-none container">
+                      <br>
+                      <p>
+                        <b>Selected User Details:</b>
+                      </p>
+                      <br>
+                      <label for="adminFName">First Name:</label>
+                      <input class="form-control" spellcheck="false" id="offerFName" name="offerFName" type="text" readonly />
+
+                      <label for="adminLName">Last Name:</label>
+                      <input class="form-control" spellcheck="false" id="offerLName" name="offerLName" type="text" readonly/>
+
+                      <label for="adminEmail">Email Address:</label>
+                      <input class="form-control" spellcheck="false" id="offerEmail" name="offerEmail" type="text" readonly/>
+
+                      <label for="adminId">Identifier:</label>
+                      <input class="form-control" spellcheck="false" id="offerUId" name="offerUId" type="text" readonly/>
+                    </div>
+                    <br>
+
+                  </div> -->
+
+                  <div class="form-group">
+
+
+
+                    <% if (locals.companies) { %>
+                      <label for="companySelect">Select Company</label>
+
+                      <select class="form-control" id="companySelect" name="company" required>
+                        <% for (var i=0; i < companies.length; i++) { %>
+
+                          <option value="<%= companies[i].company_id %>">
+                            <%= companies[i]["company_name"] %>
+                          </option>
+
+
+                          <% } %>
+
+                      </select>
+
+
+                      <% } %>
+
+
+
+
+                        <% if (locals.tags) { %>
+                          <label for="jira_tag">Select Project</label>
+
+                          <select class="form-control" id="jira_tag" name="jiraTag" required>
+                            <% for (var i=0; i < tags.length; i++) { %>
+
+                              <option value="<%= tags[i].id %>">
+                                <%= tags[i].project_name %> (
+                                  <%= tags[i].project_tag %>)</option>
+
+
+                              <% } %>
+
+                          </select>
+                          <small id="emailHelp" class="form-text text-muted">Make sure a new 'Client' is added into Jira before selecting this.</small>
+
+
+
+                          <% } %>
+
+
+
+
+
+
+
+
+                  </div>
+                  <input type="submit" class="btn btn-primary" />
+                </form>
+                <%}%>
+
+
+      </div>
+
+    </main>
+    </div>
+    </div>
+
+    <%if (locals.users) { %>
+
+      <script>
+        var userList = <%- users %>;
+        console.log(userList);
+        var selectedUser;
+        $(document).ready(function () {
+          $('#myInput').typeahead({
+            name: 'typeahead',
+            displayKey: function (data) {
+              return data.first_name + data.last_name;
+            },
+            source: function (query, process) {
+              users = [];
+              map = {};
+
+              var data = userList;
+
+              $.each(data, function (i, user) {
+                map[user.first_name + ' ' + user.last_name] = user;
+                users.push(user.first_name + ' ' + user.last_name);
+              });
+
+              process(users);
+            },
+            matcher: function (item) {    
+              if (item.toLowerCase().indexOf(this.query.trim().toLowerCase()) != -1) {        
+                return true;    
+              }
+            },
+            updater: function (item) {
+              document.getElementById("selectdAdmin").classList.remove('d-none');
+              document.getElementById("offerFName").value = map[item].first_name;
+              document.getElementById("offerLName").value = map[item].last_name;
+              document.getElementById("offerEmail").value = map[item].email;
+              document.getElementById("offerUId").value = map[item].id;
+
+              console.log()
+
+              return item;
+            },
+            limit: 10
+          });
+        });
+      </script>
+
+
+      <%}%>
+
+        <% include includes/footer.ejs %>
